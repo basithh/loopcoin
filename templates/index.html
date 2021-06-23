@@ -385,7 +385,7 @@
             // var x = 'BTC'
             // var y = 'INR'
             // var z = document.getElementById("value").value;
-            let url = 'http://127.0.0.1:5000/value/'+x+'/'+y+'/'+z;
+            let url = window.location.hostname+'/value/'+x+'/'+y+'/'+z;
 
             fetch(url)
                 .then(res => res.json())
