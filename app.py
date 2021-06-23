@@ -26,8 +26,8 @@ def index():
         first = request.form['from']
         second = request.form['to']
         r = requests.get(url=f'https://rest.coinapi.io/v1/exchangerate/{first}/{second}',headers = {"X-CoinAPI-Key": "8BCD2B74-AF33-482D-AD86-C58C41E18968"}).json()
-        return render_template('index.html',rate= r['rate'],newf=news_a)
-    return render_template('index.html',newf=news_a,rate='')
+        return render_template('index.html',rate= r['rate'],newf=news_a,newsd=news_brand)
+    return render_template('index.html',newf=news_a,rate='',newsd=news_brand)
 
 @app.route('/value/<string:x>/<string:y>/<int:z>')
 def rec78(x,y,z):
