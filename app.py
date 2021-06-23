@@ -18,16 +18,13 @@ def index():
         news_brand.append(slit[1])
         news_a = []
     news = news[:10]
-    for i in news:
+    for i,j in zip(news,news_brand):
         news_a.append({
         'news':i,
+        'brand':j
         })
-    if request.method == 'POST':
-        first = request.form['from']
-        second = request.form['to']
-        r = requests.get(url=f'https://rest.coinapi.io/v1/exchangerate/{first}/{second}',headers = {"X-CoinAPI-Key": "8BCD2B74-AF33-482D-AD86-C58C41E18968"}).json()
-        return render_template('index.html',rate= r['rate'],newf=news_a)
-    return render_template('index.html',newf=news_a,rate='')
+    print(news_a)
+    return render_template('index.html',newf=news_a)
 
 @app.route('/value/<string:x>/<string:y>/<int:z>')
 def rec78(x,y,z):
@@ -57,7 +54,7 @@ def reg():
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
     parameters = {
     'start':'1',
-    'limit':'200',
+    'limit':'5000',
     'convert':'INR'
     }
     headers = {

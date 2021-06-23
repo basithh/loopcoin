@@ -297,7 +297,7 @@
                 <h1 class="heading">Latest News</h1>
                 <br/>
                     {% for n in newf %}
-                    <p style="color: black;">{{n['news']}}</p>
+                    <p style="color: black; font-size: 20px;">➡ &nbsp {{n['news']}} &nbsp - &nbsp <span style="font-weight:bolder">{{n['brand']}}</span></p>
                     <br>
                     {% endfor %}
                
@@ -385,7 +385,7 @@
             // var x = 'BTC'
             // var y = 'INR'
             // var z = document.getElementById("value").value;
-            let url = 'http://127.0.0.1:5000/value/'+x+'/'+y+'/'+z;
+            let url = '/value/'+x+'/'+y+'/'+z;
 
             fetch(url)
                 .then(res => res.json())

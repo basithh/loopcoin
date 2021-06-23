@@ -5,6 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+       table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    </style>
+   
   </head>
   <body>
     <table style="width: 100%">
@@ -23,8 +30,8 @@
       {% for n in data %}
       <tr>
         <td>{{n['cmc_rank']}}</td>
-        <td>{{n['symbol']}}</td>
-        <td>{{n['name']}}</td>
+        <td style="font-weight:bolder">{{n['symbol']}}</td>
+        <td style="font-weight:bolder" >{{n['name']}}</td>
         <td>{{n['quote']['INR']['price']}}</td>
         <td>₹{{n['circulating_supply']}}</td>
         <td>₹{{n['quote']['INR']['volume_24h']}}</td>
