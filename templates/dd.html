@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table style="width: 100%">
+      <tr>
+        <th>Rank</th>
+        <th>Coin Symbol</th>
+        <th>Coin Name</th>
+        <th>Price</th>
+        <th>Circulating supply</th>
+        <th>Volume 24h</th>
+        <th>Percent change_1h</th>
+        <th>Percent change_24h</th>
+        <th>Percent change_7d</th>
+        <th>Market cap</th>
+      </tr>
+      {% for n in data %}
+      <tr>
+        <td>{{n['cmc_rank']}}</td>
+        <td>{{n['symbol']}}</td>
+        <td>{{n['name']}}</td>
+        <td>{{n['quote']['INR']['price']}}</td>
+        <td>₹{{n['circulating_supply']}}</td>
+        <td>₹{{n['quote']['INR']['volume_24h']}}</td>
+        <td>
+          {% if n['quote']['INR']['percent_change_1h'] >= 0 %}
+          <p style="color: rgb(9, 255, 0)">
+            {{n['quote']['INR']['percent_change_1h']}}
+          </p>
+          {% else %}
+          <p style="color: rgb(255, 0, 0)">
+            {{n['quote']['INR']['percent_change_1h']}}
+          </p>
+          {% endif %}
+        </td>
+        <td>
+          {% if n['quote']['INR']['percent_change_24h'] >= 0 %}
+          <p style="color: rgb(9, 255, 0)">
+            {{n['quote']['INR']['percent_change_24h']}}
+          </p>
+          {% else %}
+          <p style="color: rgb(255, 0, 0)">
+            {{n['quote']['INR']['percent_change_24h']}}
+          </p>
+          {% endif %}
+        </td>
+        <td>
+          {% if n['quote']['INR']['percent_change_7d'] >= 0 %}
+          <p style="color: rgb(9, 255, 0)">
+            {{n['quote']['INR']['percent_change_7d']}}
+          </p>
+          {% else %}
+          <p style="color: rgb(255, 0, 0)">
+            {{n['quote']['INR']['percent_change_7d']}}
+          </p>
+          {% endif %}
+        </td>
+        <td>₹{{n['quote']['INR']['market_cap']}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

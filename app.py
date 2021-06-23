@@ -1,11 +1,13 @@
 from flask import Flask,render_template,request
-import requests
+from requests import Request, Session, get
+import json
+import xmltodict
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/',methods=['GET','POST'])
 def index():
-    abc = requests.get("https://news.google.com/rss/search?q=cryptocurrency")
+    abc = get("https://news.google.com/rss/search?q=cryptocurrency")
     final = xmltodict.parse(abc.text) 
     news = []
     news_brand = []
@@ -24,8 +26,50 @@ def index():
         first = request.form['from']
         second = request.form['to']
         r = requests.get(url=f'https://rest.coinapi.io/v1/exchangerate/{first}/{second}',headers = {"X-CoinAPI-Key": "8BCD2B74-AF33-482D-AD86-C58C41E18968"}).json()
-        return render_template('result.html',rate= r['rate'],newf=news_a)
-    return render_template('index.html',newf=news_a)
+        return render_template('index.html',rate= r['rate'],newf=news_a)
+    return render_template('index.html',newf=news_a,rate='')
+
+@app.route('/value/<string:x>/<string:y>/<int:z>')
+def rec78(x,y,z):
+    value = z
+    first = x
+    second = y
+    url = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion'
+    parameters = {
+        'amount':str(value),
+        'symbol':str(first),
+        'convert':str(second)
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': '08c9e994-6db7-42c7-8bfe-478ffe17fa82',
+     }
+
+    session = Session()
+    session.headers.update(headers)
+    response = session.get(url, params=parameters)
+    data = json.loads(response.text)
+    return str(data['data']['quote'][str(second)]['price'])
+
+@app.route('/table')
+def reg():
+     #This example uses Python 2.7 and the python-request library.
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+    parameters = {
+    'start':'1',
+    'limit':'200',
+    'convert':'INR'
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': '08c9e994-6db7-42c7-8bfe-478ffe17fa82',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+    response = session.get(url, params=parameters)
+    data = json.loads(response.text)
+    return render_template('dd.html' , data = data['data'])
 
 if __name__=='__main__':
     app.run()
